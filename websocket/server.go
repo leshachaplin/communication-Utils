@@ -41,6 +41,7 @@ func (s *Server) listen(ctx context.Context, wr http.ResponseWriter, req *http.R
 			err := websocket.Message.Receive(ws, &msg)
 			if err != nil {
 				log.Errorf("message not read %s", err)
+				continue
 			}
 
 			s.onMsg(msg)
