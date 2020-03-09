@@ -26,9 +26,9 @@ func New(onMessage func(msg string), ctx context.Context, port int, e *echo.Echo
 	return w, nil
 }
 
-func (w *Websocket) NewWebsocketConnection() (*websocket.Conn, error) {
-	origin := fmt.Sprintf("http://localhost:%d/", w.port)
-	url := fmt.Sprintf("ws://localhost:%d/role", w.port)
+func NewWebsocketConnection(port int) (*websocket.Conn, error) {
+	origin := fmt.Sprintf("http://localhost:%d/", port)
+	url := fmt.Sprintf("ws://localhost:%d/role", port)
 	webSocket, err := websocket.Dial(url, "", origin)
 	if err != nil {
 		return nil, err
