@@ -7,6 +7,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/net/websocket"
 	"net/http"
+	"time"
 )
 
 type Server struct {
@@ -44,7 +45,8 @@ func (s *Server) listen(ctx context.Context, wr http.ResponseWriter, req *http.R
 				continue
 			}
 
-			s.onMsg(msg)
+			go s.onMsg(msg)
+			time.Sleep(time.Second)
 		}
 	}).ServeHTTP(wr, req)
 	return nil
