@@ -45,7 +45,10 @@ func (s *Server) listen(ctx context.Context, wr http.ResponseWriter, req *http.R
 				continue
 			}
 
-			go s.onMsg(msg)
+			go func(msg string) {
+				s.onMsg(msg)
+			}(msg)
+
 			time.Sleep(time.Second)
 		}
 	}).ServeHTTP(wr, req)
