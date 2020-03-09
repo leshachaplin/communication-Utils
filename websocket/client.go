@@ -11,6 +11,10 @@ type Client struct {
 	conn   websocket.Conn
 }
 
+func (c *Client) Close() error {
+	return c.conn.Close()
+}
+
 // new websocket client
 func NewClient(origin, url string) (*Client, error) {
 
