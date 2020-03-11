@@ -39,14 +39,14 @@ func (s *Server) listen(ctx context.Context, wr http.ResponseWriter, req *http.R
 		}()
 		for {
 
-			var msg interface{}
+			var msg []byte
 			err := websocket.Message.Receive(ws, msg)
 			if err != nil {
 				log.Errorf("message not read %s", err)
 				continue
 			}
 
-			go func(msg interface{}) {
+			go func(msg []byte) {
 				s.onMsg(msg)
 			}(msg)
 
