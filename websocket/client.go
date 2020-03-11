@@ -1,7 +1,6 @@
 package websocket
 
 import (
-	"fmt"
 	"golang.org/x/net/websocket"
 )
 
@@ -32,8 +31,12 @@ func NewClient(origin, url string) (*Client, error) {
 	return c, nil
 }
 
-func (c *Client) Read() (string, error) {
-	return "", fmt.Errorf("not implemented")
+func (c *Client) Read(msg []byte) ([]byte, error, int) {
+	i, err := c.conn.Read(msg)
+	if err != nil {
+		return nil, err, i
+	}
+	return msg, nil, -1
 }
 
 //write message to websocket
