@@ -52,7 +52,24 @@ func (k *Client) WriteMessage(msg []byte) error {
 func (k *Client) ReadMessage() ([]byte, error) {
 	//log
 
-	ctx, _ := context.WithTimeout(context.Background(), time.Second*2)
+	ctx, _ := context.WithTimeout(context.Background(), time.Second/10)
 	m, err := k.reader.ReadMessage(ctx)
 	return m.Value, err
+}
+
+func (k *Client) FetchMessage() (kafka.Message, error) {
+	ctx, _ := context.WithTimeout(context.Background(), time.Second/10)
+	m, err := k.reader.FetchMessage(ctx)
+	return m, err
+}
+
+func (k *Client) Commit(msg kafka.Message) error {
+	ctx, _ := context.WithTimeout(context.Background(), time.Second/10)
+	err := k.reader.CommitMessages(ctx, msg)
+	return err
+}
+
+func (k *Client) SetOffset(offset int64) error {
+	err := k.reader.SetOffset(offset)
+	return err
 }
