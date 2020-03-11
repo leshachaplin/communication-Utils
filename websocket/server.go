@@ -11,11 +11,11 @@ import (
 )
 
 type Server struct {
-	onMsg func(msg interface{})
+	onMsg func(msg []byte)
 }
 
 // New Websocket Server
-func NewServer(onMessage func(msg interface{}), ctx context.Context, e *echo.Echo) (*Server, error) {
+func NewServer(onMessage func(msg []byte), ctx context.Context, e *echo.Echo) (*Server, error) {
 
 	w := &Server{
 		onMsg: onMessage,
