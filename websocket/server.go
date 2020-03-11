@@ -11,11 +11,11 @@ import (
 )
 
 type Server struct {
-	onMsg func(msg string)
+	onMsg func(msg interface{})
 }
 
 // New Websocket Server
-func NewServer(onMessage func(msg string), ctx context.Context, e *echo.Echo) (*Server, error) {
+func NewServer(onMessage func(msg interface{}), ctx context.Context, e *echo.Echo) (*Server, error) {
 
 	w := &Server{
 		onMsg: onMessage,
@@ -38,14 +38,15 @@ func (s *Server) listen(ctx context.Context, wr http.ResponseWriter, req *http.R
 			ws.Close()
 		}()
 		for {
-			msg := ""
-			err := websocket.Message.Receive(ws, &msg)
+
+			var msg interface{}
+			err := websocket.Message.Receive(ws, msg)
 			if err != nil {
 				log.Errorf("message not read %s", err)
 				continue
 			}
 
-			go func(msg string) {
+			go func(msg interface{}) {
 				s.onMsg(msg)
 			}(msg)
 

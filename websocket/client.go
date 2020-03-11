@@ -37,8 +37,8 @@ func (c *Client) Read() (string, error) {
 }
 
 //write message to websocket
-func (c *Client) Write(mes string) error {
-	if _, err := c.conn.Write([]byte(mes)); err != nil {
+func (c *Client) Write(mes []byte) error {
+	if _, err := c.conn.Write(mes); err != nil {
 		return err
 	}
 	return nil
