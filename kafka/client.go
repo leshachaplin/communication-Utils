@@ -73,3 +73,7 @@ func (k *Client) SetOffset(offset int64) error {
 	err := k.reader.SetOffset(offset)
 	return err
 }
+
+func (k *Client) GetOffset() int64 {
+	return k.reader.Offset()
+}
